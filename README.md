@@ -22,7 +22,7 @@ import { handleError, unwrapSuccess, unwrapError } from 'rxjs-error-handling';
 
 ### `handleError()`
 
-The `handleError()` function is an RxJS operator that maps the result of an Observable which can error to either a `SuccessWrapper` object, which will contain the value, or to an `ErrorWrapper object`, which will contain the error, if it occurs. Both wrapper objects will be passed on as values, eliminating the error event from the stream. This allows for simple error handling by splitting the stream into an error stream and a success stream, with minimal boilerplate.
+The `handleError()` function is an RxJS operator that maps the result of an Observable which can error to either a `SuccessWrapper` object, which will contain the value, or to an `ErrorWrapper` object, which will contain the error, if it occurs. Both wrapper objects will be passed on as values, eliminating the error event from the stream. This allows for simple error handling by splitting the stream into an error stream and a success stream, with minimal boilerplate.
 
 ```typescript
 import { throwError, of } from 'rxjs';
@@ -42,8 +42,8 @@ const myErrorStream$ = throwError('an error').pipe(
 );
 
 myErrorStream$.subscribe(
-    value => console.log(value), // never called
-    error => console.log(error), // { type: 'ErrorWrapper', error: 'an error' }
+    value => console.log(value), // { type: 'ErrorWrapper', error: 'an error' }
+    error => console.log(error), // never called 
 );
 ```
 
@@ -79,7 +79,7 @@ const myErrorStream$ = throwError('an error').pipe(
 );
 
 myErrorStream$.subscribe(
-    error => console.log(error), // 'an error'
+    errorValue => console.log(errorValue), // 'an error'
 );
 ```
 
