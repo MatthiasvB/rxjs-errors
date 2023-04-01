@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "module": "esnext",
+    "outDir": "dist/mjs",
+    "target": "esnext"
+  }
+}

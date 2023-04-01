@@ -1,14 +1,18 @@
-import {map, of, switchMap, throwError} from 'rxjs';
+import {map, of, switchMap} from 'rxjs';
 import {handleError, unwrapError, unwrapSuccess} from './rxjs-errors';
 import {TestScheduler} from 'rxjs/internal/testing/TestScheduler';
 
-const testScheduler = new TestScheduler((actual, expected) => {
-    expect(actual).toEqual(expected);
+let testScheduler: TestScheduler;
+
+beforeEach(() => {
+    testScheduler = new TestScheduler((actual, expected) => {
+        expect(actual).toEqual(expected);
+    });
 });
 describe("The RxJS error handling API", () => {
-    it('should split observable streams into value and error streams', function () {
+    it('should split observable streams into value and error streams', () => {
         testScheduler.run(helpers => {
-            const {cold, hot, expectObservable} = helpers;
+            const {cold, expectObservable} = helpers;
             const in$ = cold("0123456789|").pipe(
                 switchMap(value => of(value).pipe(
                     map(value => {
