@@ -17,7 +17,7 @@
     "experimentalDecorators": true
 
   },
-  "files": ["src/that-routing-lib.ts"],
-  "include": ["src/*.ts"],
-  "exclude": ["src/*.(test|spec).ts"]
+  "files": ["src/"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.(test|spec).ts"]
 }
