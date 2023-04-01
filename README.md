@@ -17,7 +17,7 @@ npm install rxjs-errors
 Import the necessary functions from the library:
 
 ```typescript
-import { handleError, unwrapSuccess, unwrapError } from 'rxjs-error-handling';
+import { handleError, unwrapSuccess, unwrapError } from 'rxjs-errors';
 ```
 
 ### `handleError()`
