@@ -1,4 +1,4 @@
-import {catchError, filter, map, Observable, of, pipe} from 'rxjs';
+import {catchError, filter, map, of, pipe} from 'rxjs';
 
 /**
  * A wrapper object that indicates that the contained value
@@ -13,9 +13,9 @@ export interface SuccessWrapper<T> {
  * A wrapper object that indicates that the contained value
  * stems from a failed operation.
  */
-export interface ErrorWrapper<T> {
+export interface ErrorWrapper {
     type: "ErrorWrapper";
-    error: T;
+    error: unknown;
 }
 
 function wrapSuccess<T>(value: T): SuccessWrapper<T> {
@@ -25,7 +25,7 @@ function wrapSuccess<T>(value: T): SuccessWrapper<T> {
     };
 }
 
-function wrapError<T>(error: T): ErrorWrapper<T> {
+function wrapError(error: unknown): ErrorWrapper {
     return {
         type: "ErrorWrapper",
         error
@@ -50,10 +50,10 @@ function wrapError<T>(error: T): ErrorWrapper<T> {
  *
  * @returns an RxJS operator that wraps values and errors
  */
-export function handleError<T, E>() {
+export function handleError<T>() {
     return pipe(
         map((value: T) => wrapSuccess(value)),
-        catchError((error: E) => of(wrapError(error)))
+        catchError((error: unknown) => of(wrapError(error)))
     );
 }
 
@@ -65,9 +65,9 @@ export function handleError<T, E>() {
  *
  * @returns an RxJS operator that unpacks success (`next`) values
  */
-export function unwrapSuccess<T, E>(wrapper: SuccessWrapper<T> | ErrorWrapper<E>) {
+export function unwrapSuccess<T>() {
     return pipe(
-        filter((wrapper: SuccessWrapper<T> | ErrorWrapper<E>): wrapper is SuccessWrapper<T> =>
+        filter((wrapper: SuccessWrapper<T> | ErrorWrapper): wrapper is SuccessWrapper<T> =>
             wrapper.type === "SuccessWrapper"
         ),
         map(wrapper => wrapper.value)
@@ -82,9 +82,9 @@ export function unwrapSuccess<T, E>(wrapper: SuccessWrapper<T> | ErrorWrapper<E>
  *
  * @returns an RxJS operator that unpacks `error` values
  */
-export function unwrapError<T, E>(wrapper: SuccessWrapper<T> | ErrorWrapper<E>) {
+export function unwrapError<T>() {
     return pipe(
-        filter((wrapper: SuccessWrapper<T> | ErrorWrapper<E>): wrapper is ErrorWrapper<E> =>
+        filter((wrapper: SuccessWrapper<T> | ErrorWrapper): wrapper is ErrorWrapper =>
             wrapper.type === "ErrorWrapper"
         ),
         map(wrapper => wrapper.error)
