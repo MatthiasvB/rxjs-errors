@@ -1,4 +1,4 @@
-import {catchError, filter, map, of, pipe} from 'rxjs';
+import {catchError, filter, map, Observable, of, pipe, UnaryFunction} from 'rxjs';
 
 /**
  * A wrapper object that indicates that the contained value
@@ -17,6 +17,8 @@ export interface ErrorWrapper {
     type: "ErrorWrapper";
     error: unknown;
 }
+
+export type ResultWrapper<T> = SuccessWrapper<T> | ErrorWrapper;
 
 function wrapSuccess<T>(value: T): SuccessWrapper<T> {
     return {
@@ -50,7 +52,7 @@ function wrapError(error: unknown): ErrorWrapper {
  *
  * @returns an RxJS operator that wraps values and errors
  */
-export function handleError<T>() {
+export function handleError<T>(): UnaryFunction<Observable<T>, Observable<ResultWrapper<T>>> {
     return pipe(
         map((value: T) => wrapSuccess(value)),
         catchError((error: unknown) => of(wrapError(error)))
