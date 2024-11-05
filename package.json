@@ -1,6 +1,6 @@
 {
   "name": "rxjs-errors",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gracefully split value and error streams in RxJS Observables",
   "scripts": {
     "clean": "rm -rf ./lib",
@@ -26,6 +26,7 @@
   "files": [
     "lib/**/*"
   ],
+  "type": "module",
   "exports": {
     ".": {
       "import": {

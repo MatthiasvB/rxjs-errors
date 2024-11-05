@@ -1,1 +1,1 @@
-export * from "./rxjs-errors";
+export * from "./rxjs-errors.js";

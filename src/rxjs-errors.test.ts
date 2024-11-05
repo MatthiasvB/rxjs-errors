@@ -1,5 +1,5 @@
 import {map, of, switchMap} from 'rxjs';
-import {handleError, unwrapError, unwrapSuccess} from './rxjs-errors';
+import {handleError, unwrapError, unwrapSuccess} from './rxjs-errors.js';
 import {TestScheduler} from 'rxjs/internal/testing/TestScheduler';
 
 let testScheduler: TestScheduler;
